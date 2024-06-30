@@ -7,10 +7,12 @@
 
 import Foundation
 
+
 struct HttpStatus: Identifiable, Decodable {
     let id = UUID()
-    let code: String
-    let title: String
+    var code: String
+    var title: String = "Title"
+    var bodyText: String = "Body Text"
     
     var imageUrl: URL {
         let address = "https://http.cat/\(code).jpg"
