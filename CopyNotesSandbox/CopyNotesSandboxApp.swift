@@ -9,12 +9,17 @@ import SwiftUI
 
 @main
 struct CopyNotesSandboxApp: App {
+    
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            ContentView(noteController: NoteModelController())
         }.commands {
             SidebarCommands()
             
             }
     }
 }
+
+//class EnteredText: ObservableObject {
+//    @Published var enteredText: String = "Initial Text"
+//}

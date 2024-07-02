@@ -15,7 +15,7 @@
 		89A0B4412C301D1F0027947C /* CopyNotesSandboxUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89A0B4402C301D1F0027947C /* CopyNotesSandboxUITests.swift */; };
 		89A0B4432C301D1F0027947C /* CopyNotesSandboxUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89A0B4422C301D1F0027947C /* CopyNotesSandboxUITestsLaunchTests.swift */; };
 		89A0B4502C301D8D0027947C /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89A0B44F2C301D8D0027947C /* Helper.swift */; };
-		89A0B4522C301DB90027947C /* HttpStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89A0B4512C301DB90027947C /* HttpStatus.swift */; };
+		89A0B4522C301DB90027947C /* NoteModelController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89A0B4512C301DB90027947C /* NoteModelController.swift */; };
 		89A0B4542C301DED0027947C /* httpcodes.json in Resources */ = {isa = PBXBuildFile; fileRef = 89A0B4532C301DED0027947C /* httpcodes.json */; };
 		89A0B4562C301E0A0027947C /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89A0B4552C301E0A0027947C /* DetailView.swift */; };
 /* End PBXBuildFile section */
@@ -50,7 +50,7 @@
 		89A0B4402C301D1F0027947C /* CopyNotesSandboxUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CopyNotesSandboxUITests.swift; sourceTree = "<group>"; };
 		89A0B4422C301D1F0027947C /* CopyNotesSandboxUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CopyNotesSandboxUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		89A0B44F2C301D8D0027947C /* Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helper.swift; sourceTree = "<group>"; };
-		89A0B4512C301DB90027947C /* HttpStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HttpStatus.swift; sourceTree = "<group>"; };
+		89A0B4512C301DB90027947C /* NoteModelController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteModelController.swift; sourceTree = "<group>"; };
 		89A0B4532C301DED0027947C /* httpcodes.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = httpcodes.json; sourceTree = "<group>"; };
 		89A0B4552C301E0A0027947C /* DetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -104,10 +104,10 @@
 			isa = PBXGroup;
 			children = (
 				89A0B4242C301D1A0027947C /* CopyNotesSandboxApp.swift */,
+				89A0B4512C301DB90027947C /* NoteModelController.swift */,
 				89A0B4262C301D1A0027947C /* ContentView.swift */,
 				89A0B4552C301E0A0027947C /* DetailView.swift */,
 				89A0B44F2C301D8D0027947C /* Helper.swift */,
-				89A0B4512C301DB90027947C /* HttpStatus.swift */,
 				89A0B4532C301DED0027947C /* httpcodes.json */,
 				89A0B4282C301D1E0027947C /* Assets.xcassets */,
 				89A0B42D2C301D1E0027947C /* CopyNotesSandbox.entitlements */,
@@ -276,7 +276,7 @@
 				89A0B4252C301D1A0027947C /* CopyNotesSandboxApp.swift in Sources */,
 				89A0B4502C301D8D0027947C /* Helper.swift in Sources */,
 				89A0B4562C301E0A0027947C /* DetailView.swift in Sources */,
-				89A0B4522C301DB90027947C /* HttpStatus.swift in Sources */,
+				89A0B4522C301DB90027947C /* NoteModelController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

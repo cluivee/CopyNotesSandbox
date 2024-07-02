@@ -5,62 +5,93 @@
 //  Created by Clive on 29/06/2024.
 //
 
-
 import SwiftUI
 
 
 struct ContentView: View {
-    @State private var httpSections: [HttpSection] = [
-        HttpSection(headerCode: "1", headerText: "Section 1", statuses: [HttpStatus(code: "code 101", title: "First Title", bodyText: "description")]),
-        HttpSection(headerCode: "2", headerText: "Section 2", statuses: [HttpStatus(code: "code 202", title: "Title", bodyText: "description")]),
-        HttpSection(headerCode: "3", headerText: "Section 3", statuses: [HttpStatus(code: "code 303", title: "Title", bodyText: "description")])
-    ]
+    @StateObject var noteController: NoteModelController
     
-    @State private var showSamplesSheet = false
-    
+    var exampleNote: Note = Note(headerCode: "3", headerText: "Section 1", code: "code 202", title: "New Updated Title", bodyText: "description")
+//    @State private var showSamplesSheet = false
     
     var body: some View {
+
         NavigationView {
             List {
-                ForEach(httpSections) { section in
-                    Section(header: SectionHeaderView(section: section)) {
-                        ForEach(section.statuses) { status in
-                            NavigationLink(destination: DetailView(httpStatus: status)) {
-                                TableRowView(status: status)
-                            }
+                ForEach($noteController.dummyArray) {$section in
+                
+                Section(header: SectionHeaderView(section: $section, sectionNumber: 1)) {
+                        NavigationLink(destination: DetailView(noteSection: $section)) {
+                            TableRowView(status: $section)
                         }
                     }
                 }
+                Button("Copy First") {
+                    noteController.dummyArray[0] = exampleNote
+                }
             }
             .frame(minWidth: 250, maxWidth: 350)
+            
         }
         .listStyle(SidebarListStyle())
         .frame(maxWidth: 900, maxHeight: 600)
         .onAppear {
             //            self.readCodes()
         }
+        
+    }
+
+    func expandArray() {
+        noteController.dummyArray.append(Note(headerCode: "1", headerText: "Section 1", code: "code 101", title: "First Title", bodyText: "description"))
+        print("new dummyarray is: ", dump(noteController.dummyArray))
     }
     
-    // This is where the httpSections are downloaded I believe
-    func readCodes() {
-        httpSections = Bundle.main.decode([HttpSection].self, from: "httpcodes.json")
-    }
 }
+
+
+
+
+
+//
+//    var body: some View {
+//        NavigationView {
+//            List {
+//                ForEach(Array(zip(noteController.indices, noteController)), id: \.0) { index, section in
+//                    Section(header: SectionHeaderView(section: section, sectionNumber: (index+1))) {
+//                        NavigationLink(destination: DetailView(noteSection: section)) {
+//                            TableRowView(status: section)
+//                        }
+//                    }
+//                }
+//            }
+//            .frame(minWidth: 250, maxWidth: 350)
+//        }
+//        .listStyle(SidebarListStyle())
+//        .frame(maxWidth: 900, maxHeight: 600)
+//        .onAppear {
+//            //            self.readCodes()
+//        }
+//    }
+//
+//    func readCodes() {
+//        dummyNotes = Bundle.main.decode([Note].self, from: "httpcodes.json")
+//    }
+//}
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
+        ContentView(noteController: NoteModelController())
     }
 }
 
 struct SectionHeaderView: View {
-    let section: HttpSection
+    @Binding var section: Note
+    let sectionNumber: Int
     
     var body: some View {
         HStack(spacing: 20) {
-            Text(section.headerCode)
+            Text("\(sectionNumber)")
                 .layoutPriority(1)
-            
             Text(section.headerText)
                 .lineLimit(1)
                 .truncationMode(.tail)
@@ -72,7 +103,7 @@ struct SectionHeaderView: View {
 }
 
 struct TableRowView: View {
-    let status: HttpStatus
+    @Binding var status: Note
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -89,80 +120,3 @@ struct TableRowView: View {
     }
 }
 
-
-
-
-//
-//struct ContentView: View {
-//    @State private var httpSections: [HttpSection] = []
-//    @State private var showSamplesSheet = false
-//
-//
-//    var body: some View {
-//        NavigationView {
-//            List {
-//                ForEach(httpSections) { section in
-//                     Section(header: SectionHeaderView(section: section)) {
-//                         ForEach(section.statuses) { status in
-//                            NavigationLink(destination: DetailView(httpStatus: status)) {
-//                                 TableRowView(status: status)
-//                             }
-//                         }
-//                     }
-//                 }
-//            }
-//            .frame(minWidth: 250, maxWidth: 350)
-//        }
-//        .listStyle(SidebarListStyle())
-//        .frame(maxWidth: 900, maxHeight: 600)
-//        .onAppear {
-//            self.readCodes()
-//        }
-//    }
-//
-//    func readCodes() {
-//        httpSections = Bundle.main.decode([HttpSection].self, from: "httpcodes.json")
-//    }
-//}
-//
-//struct ContentView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        ContentView()
-//    }
-//}
-//
-//struct SectionHeaderView: View {
-//    let section: HttpSection
-//
-//    var body: some View {
-//        HStack(spacing: 20) {
-//            Text(section.headerCode)
-//                .layoutPriority(1)
-//
-//            Text(section.headerText)
-//                .lineLimit(1)
-//                .truncationMode(.tail)
-//
-//            Spacer()
-//
-//        }
-//    }
-//}
-//
-//struct TableRowView: View {
-//    let status: HttpStatus
-//
-//    var body: some View {
-//        HStack(spacing: 20) {
-//            Text(status.code)
-//                .frame(width: 40)
-//                .font(.headline)
-//                .foregroundColor(.secondary)
-//
-//            Text(status.title)
-//                .truncationMode(.tail)
-//
-//            Spacer()
-//        }
-//    }
-//}
