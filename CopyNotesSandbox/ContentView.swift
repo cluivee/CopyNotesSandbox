@@ -5,6 +5,7 @@
 //  Created by Clive on 29/06/2024.
 //
 
+import Foundation
 import SwiftUI
 
 
@@ -27,8 +28,11 @@ struct ContentView: View {
                     }
                 }
                 Button("Copy First") {
-                    noteController.dummyArray[0] = exampleNote
+                    NSPasteboard.general.clearContents()
+                    NSPasteboard.general.setString(noteController.dummyArray[0].bodyText, forType: .string)
                 }
+                
+                
             }
             .frame(minWidth: 250, maxWidth: 350)
             

@@ -17,7 +17,7 @@ struct DetailView: View {
             Text("HTTP Status Code: \(noteSection.code)")
                 .font(.headline)
                 .padding()
-             Text(noteSection.bodyText)
+             Text(noteSection.title)
                 .font(.title)
              TextEditor(text: $noteSection.bodyText)
             Spacer()
