@@ -9,23 +9,6 @@ import Foundation
 import SwiftUI
 
 
-//struct HttpStatus: Identifiable, Decodable {
-//    let id = UUID()
-//    var code: String
-//    var title: String = "Title"
-//    var bodyText: String = "Body Text"
-//
-//    var imageUrl: URL {
-//        let address = "https://http.cat/\(code).jpg"
-//        return URL(string: address)!
-//    }
-
-//    enum CodingKeys: String, CodingKey {
-//        case code
-//        case title
-//    }
-//}
-
 class NoteModelController: ObservableObject {
     @Published var note: Note = Note(headerCode: "3", headerText: "Section 1", code: "code 202", title: "Changed Title", bodyText: "description")
     
@@ -37,7 +20,7 @@ class NoteModelController: ObservableObject {
     
 }
 
-struct Note: Identifiable, Decodable {
+struct Note: Identifiable, Decodable, Hashable {
     let id = UUID()
     let headerCode: String
     let headerText: String
@@ -54,3 +37,21 @@ struct Note: Identifiable, Decodable {
     
 
 }
+
+
+//struct HttpStatus: Identifiable, Decodable {
+//    let id = UUID()
+//    var code: String
+//    var title: String = "Title"
+//    var bodyText: String = "Body Text"
+//
+//    var imageUrl: URL {
+//        let address = "https://http.cat/\(code).jpg"
+//        return URL(string: address)!
+//    }
+
+//    enum CodingKeys: String, CodingKey {
+//        case code
+//        case title
+//    }
+//}

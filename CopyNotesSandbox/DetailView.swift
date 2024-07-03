@@ -10,7 +10,6 @@ import SwiftUI
 struct DetailView: View {
     @Binding var noteSection: Note
     @State private var catImage: NSImage?
-    @State private var enteredText = "Not Found Header Initally"
 
     var body: some View {
          VStack {
