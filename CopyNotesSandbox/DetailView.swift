@@ -9,7 +9,6 @@ import SwiftUI
 
 struct DetailView: View {
     @Binding var noteSection: Note
-    @State private var catImage: NSImage?
 
     var body: some View {
          VStack {
@@ -25,23 +24,8 @@ struct DetailView: View {
         
     
     }
-    
-
-//    func getCatImage() {
-//        let url = httpStatus.imageUrl
-//        let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
-//            if let error = error {
-//                print(error)
-//            } else if let data = data {
-//                DispatchQueue.main.async {
-//                    self.catImage = NSImage(data: data)
-//                }
-//            }
-//        }
-//        task.resume()
-//    }
-
 }
+    
 
 struct DetailView_Previews: PreviewProvider {
     // some variable used just for the preview, has nothing to do with the actual data
