@@ -19,15 +19,25 @@ struct ContentView: View {
         NavigationView {
             VStack {
                 List($noteController.dummyArray, selection: $selectedIndex) {$section in
-                    NavigationLink(destination: DetailView(noteSection: $section).onAppear{
+                    
+                    
+                        Button(action: {
+                                                selectedIndex = section
+                                                copyToClipboard(bodyText: section.bodyText)
+                                                print("\(String(describing: selectedIndex!.bodyText))")
+                                            }) {
+                                                TableRowView(note: $section)
+                                            }
                         
-                        selectedIndex = section
-                        print("\(String(describing: selectedIndex!.bodyText))")
-                        copyToClipboard(bodyText: section.bodyText)
                         
-                    }) {
-                        TableRowView(note: $section)
-                    }
+//                    Button(action: {
+//                        selectedIndex = section
+//                        copyToClipboard(bodyText: section.bodyText)
+//                        print("\(String(describing: selectedIndex!.bodyText))")
+//                    }) {
+//                        TableRowView(note: $section)
+//                    }
+//                    .buttonStyle(PlainButtonStyle())
                     
                 }.frame(minWidth: 250, maxWidth: 350)
                 Button("Copy First") {
@@ -35,6 +45,22 @@ struct ContentView: View {
                     NSPasteboard.general.setString("\(selectedIndex!.bodyText)", forType: .string)
                 }
             }
+            
+            if let selectedNote = selectedIndex {
+                DetailView(noteSection: Binding(get: {
+                    selectedNote
+                }, set: { newValue in
+                    if let index = noteController.dummyArray.firstIndex(where: { $0.id == newValue.id }) {
+                        noteController.dummyArray[index] = newValue
+                        selectedIndex = newValue
+                    }
+                }))
+            } else {
+                Text("Pick a note")
+                    .foregroundColor(.gray)
+                    .padding()
+            }
+            
         }
         .listStyle(SidebarListStyle())
         .frame(maxWidth: 900, maxHeight: 600)
