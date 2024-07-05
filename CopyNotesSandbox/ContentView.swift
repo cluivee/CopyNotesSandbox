@@ -19,30 +19,43 @@ struct ContentView: View {
         NavigationView {
             VStack {
                 List($noteController.dummyArray, selection: $selectedIndex) {$section in
-                    
-                    
                         Button(action: {
-                                                selectedIndex = section
-                                                copyToClipboard(bodyText: section.bodyText)
-                                                print("\(String(describing: selectedIndex!.bodyText))")
-                                            }) {
-                                                TableRowView(note: $section)
-                                            }
-                        
-                        
-//                    Button(action: {
+                            selectedIndex = section
+                            copyToClipboard(bodyText: section.bodyText)
+                            print("\(String(describing: selectedIndex!.bodyText))")
+                        }) {
+                            TableRowView(note: $section).frame(maxWidth: .infinity, alignment: .leading)
+                        }
+                    // I don't for the file of me understand why, but adding this custom buttonStyle allows me to change the width of the button using frame to fill the whole row
+                        .buttonStyle(BlueButtonStyle())
+                    
+
+//                        .buttonStyle(PlainButtonStyle())
+                    
+//                    NavigationLink(destination: DetailView(noteSection: $section).onAppear{
+//
 //                        selectedIndex = section
-//                        copyToClipboard(bodyText: section.bodyText)
 //                        print("\(String(describing: selectedIndex!.bodyText))")
+//                        copyToClipboard(bodyText: section.bodyText)
+//
 //                    }) {
 //                        TableRowView(note: $section)
 //                    }
-//                    .buttonStyle(PlainButtonStyle())
+//                    .frame(maxWidth: .infinity, alignment: .leading)
+//                    }
+//                    .contentShape(Rectangle())
+//                    .border(.green)
                     
                 }.frame(minWidth: 250, maxWidth: 350)
-                Button("Copy First") {
-                    NSPasteboard.general.clearContents()
-                    NSPasteboard.general.setString("\(selectedIndex!.bodyText)", forType: .string)
+                HStack {
+                    Button("Add Note") {
+                        if noteController.dummyArray.count < 6 {
+                            noteController.dummyArray.append(exampleNote)
+                        }
+                    }
+                    Button("Delete Note") {
+                        
+                    }
                 }
             }
             
@@ -70,9 +83,14 @@ struct ContentView: View {
         
     }
     private func copyToClipboard(bodyText: String) {
+        if selectedIndex?.bodyText != nil {
         let pasteboard = NSPasteboard.general
         pasteboard.clearContents()
         pasteboard.setString(bodyText, forType: .string)
+        } else {
+            print("selected Index is nil" )
+        }
+        
     }
     
     
@@ -121,6 +139,16 @@ struct TableRowView: View {
     }
 }
 
+
+struct BlueButtonStyle: ButtonStyle {
+    func makeBody(configuration: Self.Configuration) -> some View {
+        configuration.label
+            .foregroundColor(configuration.isPressed ? Color.blue : Color.white)
+            .background(configuration.isPressed ? Color.white : Color.blue)
+            .cornerRadius(6.0)
+            .padding(1)
+    }
+}
 
 // If I want to add sections later
 

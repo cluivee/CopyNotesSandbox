@@ -17,6 +17,7 @@ struct DetailView: View {
                 .padding()
              Text(noteSection.title)
                 .font(.title)
+             TextField("dummy", text: $noteSection.title).labelsHidden()
              TextEditor(text: $noteSection.bodyText)
             Spacer()
         }
