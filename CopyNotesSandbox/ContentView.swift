@@ -26,11 +26,8 @@ struct ContentView: View {
                         }) {
                             TableRowView(note: $section).frame(maxWidth: .infinity, alignment: .leading)
                         }
-                    // I don't for the file of me understand why, but adding this custom buttonStyle allows me to change the width of the button using frame to fill the whole row
+                    // I don't for the life of me understand why, but adding this custom buttonStyle allows me to change the width of the button using frame to fill the whole row
                         .buttonStyle(BlueButtonStyle())
-                    
-
-//                        .buttonStyle(PlainButtonStyle())
                     
 //                    NavigationLink(destination: DetailView(noteSection: $section).onAppear{
 //
@@ -49,12 +46,17 @@ struct ContentView: View {
                 }.frame(minWidth: 250, maxWidth: 350)
                 HStack {
                     Button("Add Note") {
+                        
+                        let newNote = Note(headerCode: "3", headerText: "Section 1", code: String(noteController.dummyArray.count + 1), title: "New Updated Title", bodyText: "description")
+                        
                         if noteController.dummyArray.count < 6 {
-                            noteController.dummyArray.append(exampleNote)
+                            noteController.dummyArray.append(newNote)
                         }
                     }
                     Button("Delete Note") {
-                        
+                        if noteController.dummyArray.count > 0  {
+                            noteController.dummyArray.removeLast()
+                        }
                     }
                 }
             }
