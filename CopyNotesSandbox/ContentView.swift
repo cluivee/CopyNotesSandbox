@@ -8,27 +8,32 @@
 import Foundation
 import SwiftUI
 
+
 struct ContentView: View {
     @StateObject var noteController: NoteModelController
     @State private var selectedIndex: Note?
     
-    var exampleNote: Note = Note(nr: 1, headerCode: "3", headerText: "Section 1", title: "New Updated Title", bodyText: "description")
+    // exampleNote is not currently used
+    //    var exampleNote: Note = Note(nr: 1, headerCode: "3", headerText: "Section 1", title: "New Updated Title", bodyText: "description")
     //    @State private var showSamplesSheet = false
     
     var body: some View {
         NavigationView {
             VStack {
-                List($noteController.dummyArray, selection: $selectedIndex) {$section in
+                List(selection: $selectedIndex) {
+                    ForEach($noteController.dummyArray) { $listItem in
+            
                         Button(action: {
-                            selectedIndex = section
-                            copyToClipboard(bodyText: section.bodyText)
+                            selectedIndex = listItem
+                            copyToClipboard(bodyText: listItem.bodyText)
                             print("\(String(describing: selectedIndex!.bodyText))")
                         }) {
-                            TableRowView(note: $section).frame(maxWidth: .infinity, alignment: .leading)
+                            TableRowView(note: $listItem).frame(maxWidth: .infinity, alignment: .leading)
                         }
+                    
                     // I don't for the life of me understand why, but adding this custom buttonStyle allows me to change the width of the button using frame to fill the whole row
                         .buttonStyle(BlueButtonStyle())
-                    
+                        
 //                    NavigationLink(destination: DetailView(noteSection: $section).onAppear{
 //
 //                        selectedIndex = section
@@ -42,11 +47,20 @@ struct ContentView: View {
 //                    }
 //                    .contentShape(Rectangle())
 //                    .border(.green)
-                    
-                }.frame(minWidth: 250, maxWidth: 350)
+                    }
+                    .onMove { indexSet, newOffset in
+                        noteController.dummyArray.move(fromOffsets: indexSet, toOffset: newOffset)
+                        // renumber
+                        for i in 0..<noteController.dummyArray.count {
+                            noteController.dummyArray[i].nr = i+1
+                        }
+
+                    }
+                    .onDelete(perform: deleteNote)
+                }
                 
+                .frame(minWidth: 250, maxWidth: 350)
                 
-        
                 HStack {
                     Button("Add Note") {
                         
@@ -87,6 +101,17 @@ struct ContentView: View {
         }
         
     }
+    
+    private func deleteNote(at offsets: IndexSet) {
+        
+//        This function deletes notes from the notes array at the specified offsets and then checks if any of the deleted notes were the currently selected note. If the selected note was deleted, it sets selectedNote to nil.
+        
+        noteController.dummyArray.remove(atOffsets: offsets)
+        if let selectedIndex = selectedIndex, offsets.contains(where: {  noteController.dummyArray[$0].id == selectedIndex.id }) {
+            self.selectedIndex = nil
+        }
+    }
+    
     private func copyToClipboard(bodyText: String) {
         if selectedIndex?.bodyText != nil {
         let pasteboard = NSPasteboard.general
@@ -95,9 +120,7 @@ struct ContentView: View {
         } else {
             print("selected Index is nil" )
         }
-        
     }
-    
     
 }
 
@@ -131,7 +154,7 @@ struct TableRowView: View {
     
     var body: some View {
         VStack(alignment: .leading) {
-            Text(note.title)
+            Text("\(note.nr) - \(note.title)")
             //                .frame(width: 100)
                 .font(.headline)
                 .foregroundColor(.secondary)
