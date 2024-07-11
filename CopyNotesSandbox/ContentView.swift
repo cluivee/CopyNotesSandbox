@@ -12,7 +12,7 @@ struct ContentView: View {
     @StateObject var noteController: NoteModelController
     @State private var selectedIndex: Note?
     
-    var exampleNote: Note = Note(headerCode: "3", headerText: "Section 1", code: "code 202", title: "New Updated Title", bodyText: "description")
+    var exampleNote: Note = Note(nr: 1, headerCode: "3", headerText: "Section 1", title: "New Updated Title", bodyText: "description")
     //    @State private var showSamplesSheet = false
     
     var body: some View {
@@ -44,10 +44,13 @@ struct ContentView: View {
 //                    .border(.green)
                     
                 }.frame(minWidth: 250, maxWidth: 350)
+                
+                
+        
                 HStack {
                     Button("Add Note") {
                         
-                        let newNote = Note(headerCode: "3", headerText: "Section 1", code: String(noteController.dummyArray.count + 1), title: "New Updated Title", bodyText: "description")
+                        let newNote = Note(nr: (noteController.dummyArray.count + 1), headerCode: "3", headerText: "Section 1", title: "New Updated Title", bodyText: "description")
                         
                         if noteController.dummyArray.count < 6 {
                             noteController.dummyArray.append(newNote)

@@ -12,7 +12,7 @@ struct DetailView: View {
 
     var body: some View {
          VStack {
-            Text("HTTP Status Code: \(noteSection.code)")
+            Text("Index Position: \(noteSection.nr)")
                 .font(.headline)
                 .padding()
              Text(noteSection.title)
@@ -30,7 +30,7 @@ struct DetailView: View {
 
 struct DetailView_Previews: PreviewProvider {
     // some variable used just for the preview, has nothing to do with the actual data
-    @State static var previewNote: Note = Note(headerCode: "3", headerText: "Section 1", code: "code 202", title: "Changed Title", bodyText: "description")
+    @State static var previewNote: Note = Note(nr: 1, headerCode: "3", headerText: "Section 1", title: "Changed Title", bodyText: "description")
     static var previews: some View {
     
         DetailView(noteSection: $previewNote)
