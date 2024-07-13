@@ -61,19 +61,15 @@ struct ContentView: View {
                 
                 .frame(minWidth: 250, maxWidth: 350)
                 
+                // The buttons
                 HStack {
-                    Button("Add Note") {
+                    Button(action: addNote) {
+                        Text("Add Note")
                         
-                        let newNote = Note(nr: (noteController.dummyArray.count + 1), headerCode: "3", headerText: "Section 1", title: "New Updated Title", bodyText: "description")
-                        
-                        if noteController.dummyArray.count < 6 {
-                            noteController.dummyArray.append(newNote)
-                        }
                     }
-                    Button("Delete Note") {
-                        if noteController.dummyArray.count > 0  {
-                            noteController.dummyArray.removeLast()
-                        }
+                    Button(action: deleteSelectedNote) {
+                        Text("Delete Selected")
+                        
                     }
                 }
             }
@@ -103,13 +99,44 @@ struct ContentView: View {
     }
     
     private func deleteNote(at offsets: IndexSet) {
-        
 //        This function deletes notes from the notes array at the specified offsets and then checks if any of the deleted notes were the currently selected note. If the selected note was deleted, it sets selectedNote to nil.
         
         noteController.dummyArray.remove(atOffsets: offsets)
         if let selectedIndex = selectedIndex, offsets.contains(where: {  noteController.dummyArray[$0].id == selectedIndex.id }) {
             self.selectedIndex = nil
         }
+    }
+    // TODO: 12 Jul 2024, have to update the add and delete buttons
+    
+    private func addNote() {
+        let count = noteController.dummyArray.count
+        let newNote = Note(nr: count + 1,  headerCode: "3", headerText: "Section 1", title: "New Updated Title", bodyText: "description")
+        
+        if noteController.dummyArray.count < 6 {
+                    noteController.dummyArray.append(newNote)
+                }
+            
+        selectedIndex = newNote
+        
+        // old code in the old button
+//        let newNote = Note(nr: (noteController.dummyArray.count + 1), headerCode: "3", headerText: "Section 1", title: "New Updated Title", bodyText: "description")
+//
+//        if noteController.dummyArray.count < 6 {
+//            noteController.dummyArray.append(newNote)
+//        }
+//
+    }
+    
+    private func deleteSelectedNote() {
+        if let deletedIndex = selectedIndex {
+            noteController.dummyArray.removeAll { $0.id == deletedIndex.id }
+            self.selectedIndex = nil
+        }
+        
+        // old code in the old button
+//        if noteController.dummyArray.count > 0  {
+//            noteController.dummyArray.removeLast()
+//        }
     }
     
     private func copyToClipboard(bodyText: String) {
