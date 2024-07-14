@@ -49,6 +49,7 @@ struct ContentView: View {
 //                    .border(.green)
                     }
                     .onMove { indexSet, newOffset in
+                        print("onMove called")
                         noteController.dummyArray.move(fromOffsets: indexSet, toOffset: newOffset)
                         // renumber
                         for i in 0..<noteController.dummyArray.count {
@@ -56,7 +57,7 @@ struct ContentView: View {
                         }
 
                     }
-                    .onDelete(perform: deleteNote)
+
                 }
                 
                 .frame(minWidth: 250, maxWidth: 350)
@@ -100,13 +101,15 @@ struct ContentView: View {
     
     private func deleteNote(at offsets: IndexSet) {
 //        This function deletes notes from the notes array at the specified offsets and then checks if any of the deleted notes were the currently selected note. If the selected note was deleted, it sets selectedNote to nil.
+// Testing from the test project, this function actually doesn't get called, it seems onDelete only gets called if the user swipes to delete
+        
         
         noteController.dummyArray.remove(atOffsets: offsets)
         if let selectedIndex = selectedIndex, offsets.contains(where: {  noteController.dummyArray[$0].id == selectedIndex.id }) {
             self.selectedIndex = nil
         }
     }
-    // TODO: 12 Jul 2024, have to update the add and delete buttons
+    // TODO: 13 Jul 2024, updated add and delete buttons, try the removeoffsets method for delete from the testnotesproject as that is maybe updating the indices immediately.
     
     private func addNote() {
         let count = noteController.dummyArray.count
@@ -131,7 +134,12 @@ struct ContentView: View {
         if let deletedIndex = selectedIndex {
             noteController.dummyArray.removeAll { $0.id == deletedIndex.id }
             self.selectedIndex = nil
+            // renumber
+            for i in 0..<noteController.dummyArray.count {
+                noteController.dummyArray[i].nr = i+1
+            }
         }
+        
         
         // old code in the old button
 //        if noteController.dummyArray.count > 0  {
