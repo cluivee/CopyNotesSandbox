@@ -33,7 +33,12 @@ struct ContentView: View {
                     
                     // I don't for the life of me understand why, but adding this custom buttonStyle allows me to change the width of the button using frame to fill the whole row
                         .buttonStyle(BlueButtonStyle())
-                        
+                        // This adds an option to right click and delete, but not sure how to ensure this is the selected item
+                        .contextMenu {
+                            Button(action: deleteSelectedNote){
+                                Text("Delete")
+                            }
+                        }
 //                    NavigationLink(destination: DetailView(noteSection: $section).onAppear{
 //
 //                        selectedIndex = section
@@ -59,7 +64,6 @@ struct ContentView: View {
                     }
 
                 }
-                
                 .frame(minWidth: 250, maxWidth: 350)
                 
                 // The buttons
@@ -139,8 +143,6 @@ struct ContentView: View {
                 noteController.dummyArray[i].nr = i+1
             }
         }
-        
-        
         // old code in the old button
 //        if noteController.dummyArray.count > 0  {
 //            noteController.dummyArray.removeLast()
@@ -156,9 +158,7 @@ struct ContentView: View {
             print("selected Index is nil" )
         }
     }
-    
 }
-
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
@@ -201,7 +201,6 @@ struct TableRowView: View {
         }.multilineTextAlignment(.leading)
     }
 }
-
 
 struct BlueButtonStyle: ButtonStyle {
     func makeBody(configuration: Self.Configuration) -> some View {
