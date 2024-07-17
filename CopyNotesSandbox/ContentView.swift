@@ -22,7 +22,7 @@ struct ContentView: View {
             VStack {
                 List(selection: $selectedIndex) {
                     ForEach($noteController.dummyArray) { $listItem in
-            
+                        
                         Button(action: {
                             selectedIndex = listItem
                             copyToClipboard(bodyText: listItem.bodyText)
@@ -30,8 +30,8 @@ struct ContentView: View {
                         }) {
                             TableRowView(note: $listItem).frame(maxWidth: .infinity, alignment: .leading)
                         }
-                    
-                    // I don't for the life of me understand why, but adding this custom buttonStyle allows me to change the width of the button using frame to fill the whole row
+                        
+                        // I don't for the life of me understand why, but adding this custom buttonStyle allows me to change the width of the button using frame to fill the whole row
                         .buttonStyle(BlueButtonStyle())
                         // This adds an option to right click and delete, but not sure how to ensure this is the selected item
                         .contextMenu {
@@ -39,19 +39,19 @@ struct ContentView: View {
                                 Text("Delete")
                             }
                         }
-//                    NavigationLink(destination: DetailView(noteSection: $section).onAppear{
-//
-//                        selectedIndex = section
-//                        print("\(String(describing: selectedIndex!.bodyText))")
-//                        copyToClipboard(bodyText: section.bodyText)
-//
-//                    }) {
-//                        TableRowView(note: $section)
-//                    }
-//                    .frame(maxWidth: .infinity, alignment: .leading)
-//                    }
-//                    .contentShape(Rectangle())
-//                    .border(.green)
+                        //                    NavigationLink(destination: DetailView(noteSection: $section).onAppear{
+                        //
+                        //                        selectedIndex = section
+                        //                        print("\(String(describing: selectedIndex!.bodyText))")
+                        //                        copyToClipboard(bodyText: section.bodyText)
+                        //
+                        //                    }) {
+                        //                        TableRowView(note: $section)
+                        //                    }
+                        //                    .frame(maxWidth: .infinity, alignment: .leading)
+                        //                    }
+                        //                    .contentShape(Rectangle())
+                        //                    .border(.green)
                     }
                     .onMove { indexSet, newOffset in
                         print("onMove called")
@@ -60,11 +60,18 @@ struct ContentView: View {
                         for i in 0..<noteController.dummyArray.count {
                             noteController.dummyArray[i].nr = i+1
                         }
-
+                        
                     }
-
+                    
                 }
                 .frame(minWidth: 250, maxWidth: 350)
+                .toolbar {
+                    Button(action: addNote) {
+                        Image(systemName: "plus")
+                            .resizable()
+                                .frame(width: 24.0, height: 24.0)
+                    }
+                }
                 
                 // The buttons
                 HStack {
@@ -104,9 +111,8 @@ struct ContentView: View {
     }
     
     private func deleteNote(at offsets: IndexSet) {
-//        This function deletes notes from the notes array at the specified offsets and then checks if any of the deleted notes were the currently selected note. If the selected note was deleted, it sets selectedNote to nil.
-// Testing from the test project, this function actually doesn't get called, it seems onDelete only gets called if the user swipes to delete
-        
+        //        This function deletes notes from the notes array at the specified offsets and then checks if any of the deleted notes were the currently selected note. If the selected note was deleted, it sets selectedNote to nil.
+        // Testing from the test project, this function actually doesn't get called, it seems onDelete only gets called if the user swipes to delete
         
         noteController.dummyArray.remove(atOffsets: offsets)
         if let selectedIndex = selectedIndex, offsets.contains(where: {  noteController.dummyArray[$0].id == selectedIndex.id }) {
@@ -120,18 +126,18 @@ struct ContentView: View {
         let newNote = Note(nr: count + 1,  headerCode: "3", headerText: "Section 1", title: "New Updated Title", bodyText: "description")
         
         if noteController.dummyArray.count < 6 {
-                    noteController.dummyArray.append(newNote)
-                }
-            
+            noteController.dummyArray.append(newNote)
+        }
+        
         selectedIndex = newNote
         
         // old code in the old button
-//        let newNote = Note(nr: (noteController.dummyArray.count + 1), headerCode: "3", headerText: "Section 1", title: "New Updated Title", bodyText: "description")
-//
-//        if noteController.dummyArray.count < 6 {
-//            noteController.dummyArray.append(newNote)
-//        }
-//
+        //        let newNote = Note(nr: (noteController.dummyArray.count + 1), headerCode: "3", headerText: "Section 1", title: "New Updated Title", bodyText: "description")
+        //
+        //        if noteController.dummyArray.count < 6 {
+        //            noteController.dummyArray.append(newNote)
+        //        }
+        //
     }
     
     private func deleteSelectedNote() {
@@ -144,16 +150,16 @@ struct ContentView: View {
             }
         }
         // old code in the old button
-//        if noteController.dummyArray.count > 0  {
-//            noteController.dummyArray.removeLast()
-//        }
+        //        if noteController.dummyArray.count > 0  {
+        //            noteController.dummyArray.removeLast()
+        //        }
     }
     
     private func copyToClipboard(bodyText: String) {
         if selectedIndex?.bodyText != nil {
-        let pasteboard = NSPasteboard.general
-        pasteboard.clearContents()
-        pasteboard.setString(bodyText, forType: .string)
+            let pasteboard = NSPasteboard.general
+            pasteboard.clearContents()
+            pasteboard.setString(bodyText, forType: .string)
         } else {
             print("selected Index is nil" )
         }
