@@ -22,6 +22,17 @@ struct DetailView: View {
             Spacer()
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
+        //Placing the toolbar here because putting it on the navigationView causes the plus button to dissappear
+
+        .toolbar {
+            ToolbarItemGroup{
+                Button("Edit") {}
+                Button("Save") {}
+                Button("Copy") {}
+                Spacer().frame(width: 50)
+                Button("Delete") {}
+            }
+        }
         
     
     }

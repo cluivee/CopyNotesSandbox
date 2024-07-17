@@ -19,7 +19,7 @@ struct ContentView: View {
     
     var body: some View {
         NavigationView {
-            VStack {
+            
                 List(selection: $selectedIndex) {
                     ForEach($noteController.dummyArray) { $listItem in
                         
@@ -73,22 +73,8 @@ struct ContentView: View {
                                 .frame(width: 24.0, height: 24.0)
                     }
                 }
-                .navigationTitle("Snippets")
                 
-                
-                
-                // The buttons
-                HStack {
-                    Button(action: addNote) {
-                        Text("Add Note")
-                        
-                    }
-                    Button(action: deleteSelectedNote) {
-                        Text("Delete Selected")
-                        
-                    }
-                }
-            }
+            
             
             if let selectedNote = selectedIndex {
                 DetailView(noteSection: Binding(get: {
@@ -107,6 +93,7 @@ struct ContentView: View {
             
         }
         .listStyle(SidebarListStyle())
+        .navigationTitle("Snippets")
         .frame(maxWidth: 900, maxHeight: 600)
         .onAppear {
             //            self.readCodes()
