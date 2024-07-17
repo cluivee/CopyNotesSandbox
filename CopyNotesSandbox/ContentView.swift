@@ -66,12 +66,16 @@ struct ContentView: View {
                 }
                 .frame(minWidth: 250, maxWidth: 350)
                 .toolbar {
+                    Spacer()
                     Button(action: addNote) {
                         Image(systemName: "plus")
                             .resizable()
                                 .frame(width: 24.0, height: 24.0)
                     }
                 }
+                .navigationTitle("Snippets")
+                
+                
                 
                 // The buttons
                 HStack {
