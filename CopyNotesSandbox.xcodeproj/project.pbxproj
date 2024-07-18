@@ -19,6 +19,7 @@
 		89A0B4542C301DED0027947C /* httpcodes.json in Resources */ = {isa = PBXBuildFile; fileRef = 89A0B4532C301DED0027947C /* httpcodes.json */; };
 		89A0B4562C301E0A0027947C /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89A0B4552C301E0A0027947C /* DetailView.swift */; };
 		89BBB13E2C35C97700FDF291 /* OldContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89BBB13D2C35C97700FDF291 /* OldContentView.swift */; };
+		89EE56312C4970DF00B1044A /* TextEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89EE56302C4970DF00B1044A /* TextEditorView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,6 +56,7 @@
 		89A0B4532C301DED0027947C /* httpcodes.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = httpcodes.json; sourceTree = "<group>"; };
 		89A0B4552C301E0A0027947C /* DetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailView.swift; sourceTree = "<group>"; };
 		89BBB13D2C35C97700FDF291 /* OldContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OldContentView.swift; sourceTree = "<group>"; };
+		89EE56302C4970DF00B1044A /* TextEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextEditorView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -107,6 +109,7 @@
 			children = (
 				89A0B4242C301D1A0027947C /* CopyNotesSandboxApp.swift */,
 				89A0B4512C301DB90027947C /* NoteModelController.swift */,
+				89EE56302C4970DF00B1044A /* TextEditorView.swift */,
 				89A0B4262C301D1A0027947C /* ContentView.swift */,
 				89BBB13D2C35C97700FDF291 /* OldContentView.swift */,
 				89A0B4552C301E0A0027947C /* DetailView.swift */,
@@ -281,6 +284,7 @@
 				89A0B4562C301E0A0027947C /* DetailView.swift in Sources */,
 				89BBB13E2C35C97700FDF291 /* OldContentView.swift in Sources */,
 				89A0B4522C301DB90027947C /* NoteModelController.swift in Sources */,
+				89EE56312C4970DF00B1044A /* TextEditorView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

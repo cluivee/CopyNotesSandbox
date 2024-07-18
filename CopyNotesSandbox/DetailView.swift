@@ -7,29 +7,46 @@
 
 import SwiftUI
 
+extension NSTextView {
+    open override var frame: CGRect {
+        didSet {
+            backgroundColor = .clear //<<here clear
+            drawsBackground = true
+        }
+
+    }
+}
+
 struct DetailView: View {
     @Binding var noteSection: Note
-
+   
     var body: some View {
          VStack {
+             
             Text("Index Position: \(noteSection.nr)")
                 .font(.headline)
                 .padding()
              Text(noteSection.title)
                 .font(.title)
-             TextField("dummy", text: $noteSection.title).labelsHidden()
-             TextEditor(text: $noteSection.bodyText)
-            Spacer()
+             TextField("Title", text: $noteSection.title).labelsHidden()
+                 .font(.title.bold())
+                 .border(.clear)
+                 .textFieldStyle(PlainTextFieldStyle())
+                 .padding([.top, .leading], 4)
+//             TextEditor(text: $noteSection.bodyText)
+             TextEditorView(string: $noteSection.bodyText)
+                 .font(.title3)
+             Spacer()
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        //Placing the toolbar here because putting it on the navigationView causes the plus button to dissappear
-
+        //Placing the toolbar here because putting it on the navigationView causes the plus button to dissappear - We've finally found out that the spacer in this detailView was messing up the spacer in the sidebar
         .toolbar {
             ToolbarItemGroup{
                 Button("Edit") {}
                 Button("Save") {}
                 Button("Copy") {}
-                Spacer().frame(width: 50)
+                // Ok So apparently this was messing up the spacer in the sidebar
+//                Spacer().frame(width: 50)
                 Button("Delete") {}
             }
         }

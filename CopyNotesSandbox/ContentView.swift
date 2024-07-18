@@ -63,18 +63,21 @@ struct ContentView: View {
                         
                     }
                     
-                }
+                
+            }
+                .listStyle(SidebarListStyle())
                 .frame(minWidth: 250, maxWidth: 350)
                 .toolbar {
-                    Spacer()
-                    Button(action: addNote) {
-                        Image(systemName: "plus")
-                            .resizable()
-                                .frame(width: 24.0, height: 24.0)
+                    ToolbarItemGroup{
+                        Spacer()
+                        Button(action: addNote) {
+                            Image(systemName: "plus")
+                                .resizable()
+                                    .frame(width: 24.0, height: 24.0)
+                        }
                     }
                 }
                 
-            
             
             if let selectedNote = selectedIndex {
                 DetailView(noteSection: Binding(get: {
@@ -92,7 +95,7 @@ struct ContentView: View {
             }
             
         }
-        .listStyle(SidebarListStyle())
+        
         .navigationTitle("Snippets")
         .frame(maxWidth: 900, maxHeight: 600)
         .onAppear {
