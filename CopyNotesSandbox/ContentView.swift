@@ -29,6 +29,7 @@ struct ContentView: View {
                             print("\(String(describing: selectedIndex!.bodyText))")
                         }) {
                             TableRowView(note: $listItem).frame(maxWidth: .infinity, alignment: .leading)
+                                .padding(5)
                         }
                         
                         // I don't for the life of me understand why, but adding this custom buttonStyle allows me to change the width of the button using frame to fill the whole row
@@ -166,6 +167,36 @@ struct ContentView_Previews: PreviewProvider {
     }
 }
 
+
+struct TableRowView: View {
+    @Binding var note: Note
+    
+    var body: some View {
+        VStack(alignment: .leading, spacing: 5) {
+            Text("\(note.nr). \(note.title)")
+            //                .frame(width: 100)
+                .font(.title3)
+                .fontWeight(.bold)
+                .foregroundColor(.secondary)
+            Text(note.bodyText)
+                .fontWeight(.light)
+                .truncationMode(.tail)
+            
+        }.multilineTextAlignment(.leading)
+    }
+}
+
+struct BlueButtonStyle: ButtonStyle {
+    func makeBody(configuration: Self.Configuration) -> some View {
+        configuration.label
+            .foregroundColor(configuration.isPressed ? Color.blue : Color.white)
+            .background(configuration.isPressed ? Color.white : Color.blue)
+            .cornerRadius(6.0)
+            .padding(1)
+    }
+}
+
+
 struct SectionHeaderView: View {
     var section: Note
     let sectionNumber: Int
@@ -181,34 +212,6 @@ struct SectionHeaderView: View {
             Spacer()
             
         }
-    }
-}
-
-struct TableRowView: View {
-    @Binding var note: Note
-    
-    var body: some View {
-        VStack(alignment: .leading) {
-            Text("\(note.nr) - \(note.title)")
-            //                .frame(width: 100)
-                .font(.headline)
-                .foregroundColor(.secondary)
-            Text(note.bodyText)
-                .truncationMode(.tail)
-            
-            Spacer()
-            
-        }.multilineTextAlignment(.leading)
-    }
-}
-
-struct BlueButtonStyle: ButtonStyle {
-    func makeBody(configuration: Self.Configuration) -> some View {
-        configuration.label
-            .foregroundColor(configuration.isPressed ? Color.blue : Color.white)
-            .background(configuration.isPressed ? Color.white : Color.blue)
-            .cornerRadius(6.0)
-            .padding(1)
     }
 }
 

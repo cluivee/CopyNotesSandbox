@@ -22,12 +22,12 @@ struct DetailView: View {
    
     var body: some View {
          VStack {
-             
-            Text("Index Position: \(noteSection.nr)")
-                .font(.headline)
-                .padding()
-             Text(noteSection.title)
-                .font(.title)
+//
+//            Text("Index Position: \(noteSection.nr)")
+//                .font(.headline)
+//                .padding()
+//             Text(noteSection.title)
+//                .font(.title)
              TextField("Title", text: $noteSection.title).labelsHidden()
                  .font(.title.bold())
                  .border(.clear)
@@ -39,6 +39,7 @@ struct DetailView: View {
              Spacer()
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .padding(EdgeInsets(top: 20, leading: 50, bottom: 20, trailing: 50))
         //Placing the toolbar here because putting it on the navigationView causes the plus button to dissappear - We've finally found out that the spacer in this detailView was messing up the spacer in the sidebar
         .toolbar {
             ToolbarItemGroup{
@@ -61,6 +62,8 @@ struct DetailView_Previews: PreviewProvider {
     @State static var previewNote: Note = Note(nr: 1, headerCode: "3", headerText: "Section 1", title: "Changed Title", bodyText: "description")
     static var previews: some View {
     
-        DetailView(noteSection: $previewNote)
+        Group {
+            DetailView(noteSection: $previewNote)
+        }
     }
 }
