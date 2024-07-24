@@ -11,6 +11,8 @@ import SwiftUI
 
 struct ContentView: View {
     @StateObject var noteController: NoteModelController
+    
+    // At the moment selectedIndex is not an index, it's a note object.
     @State private var selectedIndex: Note?
     
     // exampleNote is not currently used
@@ -88,7 +90,7 @@ struct ContentView: View {
                         noteController.dummyArray[index] = newValue
                         selectedIndex = newValue
                     }
-                }))
+                }), noteController: noteController, function: {self.deleteSelectedNote()})
             } else {
                 Text("Pick a note")
                     .foregroundColor(.gray)
@@ -96,7 +98,6 @@ struct ContentView: View {
             }
             
         }
-        
         .navigationTitle("Snippets")
         .frame(maxWidth: 900, maxHeight: 600)
         .onAppear {
