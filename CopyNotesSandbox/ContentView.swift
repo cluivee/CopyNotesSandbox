@@ -11,13 +11,12 @@ import Foundation
 import SwiftUI
 
 
-// some changes
-
 struct ContentView: View {
     @StateObject var noteController: NoteModelController
     
     // At the moment selectedIndex is not an index, it's a note object.
     @State private var selectedIndex: Note?
+    var unused: String?
     
     // exampleNote is not currently used
     //    var exampleNote: Note = Note(nr: 1, headerCode: "3", headerText: "Section 1", title: "New Updated Title", bodyText: "description")
