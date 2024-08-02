@@ -83,7 +83,6 @@ struct ContentView: View {
                     }
                 }
                 
-            
             if let selectedNote = selectedIndex {
                 DetailView(noteSection: Binding(get: {
                     selectedNote
