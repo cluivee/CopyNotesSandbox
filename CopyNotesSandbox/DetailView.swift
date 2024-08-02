@@ -58,6 +58,8 @@ struct DetailView: View {
     }
     
     private func copyToClipboard(bodyText: String) {
+        // could probably remove the if statement here now
+        
         if noteSection.bodyText != nil {
             let pasteboard = NSPasteboard.general
             pasteboard.clearContents()
