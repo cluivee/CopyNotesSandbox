@@ -22,6 +22,9 @@ struct DetailView: View {
     @StateObject var noteController: NoteModelController
     var function: () -> Void
     
+    @State private var text = "Initial text"
+    @State private var isEditing = false
+    
     
     var body: some View {
         VStack {
@@ -36,9 +39,19 @@ struct DetailView: View {
                 .border(.clear)
                 .textFieldStyle(PlainTextFieldStyle())
                 .padding([.top, .leading], 4)
-            //             TextEditor(text: $noteSection.bodyText)
+            TextField("Test", text: $text)
+                .disabled(!isEditing)
+                .frame(height: 50)
+                .border(Color.gray, width: 1)
+            Button(action: {
+                isEditing.toggle()
+                print(isEditing)
+            }) {
+                Text(isEditing ? "Done" : "Edit")
+            }
             TextEditorView(string: $noteSection.bodyText)
                 .font(.title3)
+                
             Spacer()
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -69,21 +82,21 @@ struct DetailView: View {
         }
     }
     
-//    private func deleteSelectedNote() {
-//        if let index = noteController.dummyArray.firstIndex(where: { $0.id == noteSection.id }) {
-//            noteController.dummyArray.remove(at: index)
-//            if noteController.dummyArray.isEmpty {
-//                // If all notes are deleted, you may need to handle the case where no note is selected
-//
-//            } else {
-//                noteSection = noteController.dummyArray[max(0, index - 1)]
-//            }
-//            // Renumber the remaining notes
-//            for i in 0..<noteController.dummyArray.count {
-//                noteController.dummyArray[i].nr = i + 1
-//            }
-//        }
-//    }
+    //    private func deleteSelectedNote() {
+    //        if let index = noteController.dummyArray.firstIndex(where: { $0.id == noteSection.id }) {
+    //            noteController.dummyArray.remove(at: index)
+    //            if noteController.dummyArray.isEmpty {
+    //                // If all notes are deleted, you may need to handle the case where no note is selected
+    //
+    //            } else {
+    //                noteSection = noteController.dummyArray[max(0, index - 1)]
+    //            }
+    //            // Renumber the remaining notes
+    //            for i in 0..<noteController.dummyArray.count {
+    //                noteController.dummyArray[i].nr = i + 1
+    //            }
+    //        }
+    //    }
     
     
 }
