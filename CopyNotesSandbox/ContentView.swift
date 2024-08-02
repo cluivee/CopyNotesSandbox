@@ -11,6 +11,8 @@ import Foundation
 import SwiftUI
 
 
+// some changes
+
 struct ContentView: View {
     @StateObject var noteController: NoteModelController
     
