@@ -10,10 +10,9 @@ import SwiftUI
 extension NSTextView {
     open override var frame: CGRect {
         didSet {
-            backgroundColor = .clear //<<here clear
+            backgroundColor = .clear //<< here clear
             drawsBackground = true
         }
-        
     }
 }
 
@@ -21,9 +20,6 @@ struct DetailView: View {
     @Binding var noteSection: Note
     @StateObject var noteController: NoteModelController
     var function: () -> Void
-    
-    @State private var text = "Initial text"
-    @State private var isEditing = false
     
     
     var body: some View {
@@ -39,16 +35,6 @@ struct DetailView: View {
                 .border(.clear)
                 .textFieldStyle(PlainTextFieldStyle())
                 .padding([.top, .leading], 4)
-            TextField("Test", text: $text)
-                .disabled(!isEditing)
-                .frame(height: 50)
-                .border(Color.gray, width: 1)
-            Button(action: {
-                isEditing.toggle()
-                print(isEditing)
-            }) {
-                Text(isEditing ? "Done" : "Edit")
-            }
             TextEditorView(string: $noteSection.bodyText)
                 .font(.title3)
                 
