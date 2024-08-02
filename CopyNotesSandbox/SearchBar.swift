@@ -17,7 +17,7 @@ struct SearchBar: View {
     var body: some View {
         HStack {
             TextField("Search ...", text: $text)
-                .padding(7)
+                .padding(5)
                 .padding(.horizontal, 20)
 //                .background(Color(.gray))
                 .cornerRadius(8)
@@ -29,7 +29,7 @@ struct SearchBar: View {
                             .padding(.leading, 8)
                     }
                 )
-                .padding(.horizontal, 10)
+                
                 .onTapGesture {
                     self.isEditing = true
                 }

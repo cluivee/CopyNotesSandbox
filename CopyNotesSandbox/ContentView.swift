@@ -24,15 +24,16 @@ struct ContentView: View {
     
     var body: some View {
         NavigationView {
-            
+            VStack{
+                SearchBar(text: $searchText)
             List(selection: $selectedIndex) {
-                ForEach($noteController.dummyArray) { $listItem in
+                ForEach(noteController.dummyArray.filter({searchText.isEmpty ? true : $0.title.localizedCaseInsensitiveContains(searchText)})) { listItem in
                     Button(action: {
                         selectedIndex = listItem
                         copyToClipboard(bodyText: listItem.bodyText)
                         print("\(String(describing: selectedIndex!.bodyText))")
                     }) {
-                        TableRowView(note: $listItem).frame(maxWidth: .infinity, alignment: .leading)
+                        TableRowView(note: listItem).frame(maxWidth: .infinity, alignment: .leading)
                             .padding(5)
                     }
                     
@@ -44,19 +45,7 @@ struct ContentView: View {
                             Text("Delete")
                         }
                     }
-                    //                    NavigationLink(destination: DetailView(noteSection: $section).onAppear{
-                    //
-                    //                        selectedIndex = section
-                    //                        print("\(String(describing: selectedIndex!.bodyText))")
-                    //                        copyToClipboard(bodyText: section.bodyText)
-                    //
-                    //                    }) {
-                    //                        TableRowView(note: $section)
-                    //                    }
-                    //                    .frame(maxWidth: .infinity, alignment: .leading)
-                    //                    }
-                    //                    .contentShape(Rectangle())
-                    //                    .border(.green)
+
                 }
                 .onMove { indexSet, newOffset in
                     print("onMove called")
@@ -82,6 +71,7 @@ struct ContentView: View {
                     }
                 }
             }
+        }
             if let selectedNote = selectedIndex {
                 DetailView(noteSection: Binding(get: {
                     selectedNote
@@ -97,14 +87,13 @@ struct ContentView: View {
                     .padding()
             }
         }
-        
-                .navigationTitle("Snippets")
-                .frame(maxWidth: 900, maxHeight: 600)
-                .onAppear {
-                    //            self.readCodes()
-                }
+        .navigationTitle("Snippets")
+        .frame(maxWidth: 900, maxHeight: 600)
+        .onAppear {
+            //            self.readCodes()
         }
-
+    }
+    
     
     private func deleteNote(at offsets: IndexSet) {
         //        This function deletes notes from the notes array at the specified offsets and then checks if any of the deleted notes were the currently selected note. If the selected note was deleted, it sets selectedNote to nil.
@@ -170,7 +159,7 @@ struct ContentView_Previews: PreviewProvider {
 
 
 struct TableRowView: View {
-    @Binding var note: Note
+    var note: Note
     
     var body: some View {
         VStack(alignment: .leading, spacing: 5) {

@@ -24,12 +24,6 @@ struct DetailView: View {
     
     var body: some View {
         VStack {
-            //
-            //            Text("Index Position: \(noteSection.nr)")
-            //                .font(.headline)
-            //                .padding()
-            //             Text(noteSection.title)
-            //                .font(.title)
             TextField("Title", text: $noteSection.title).labelsHidden()
                 .font(.title.bold())
                 .border(.clear)
