@@ -55,7 +55,6 @@ struct DetailView: View {
             }
         }
         
-        
     }
     
     private func copyToClipboard(bodyText: String) {
