@@ -16,6 +16,7 @@ struct ContentView: View {
     
     // At the moment selectedIndex is not an index, it's a note object.
     @State private var selectedIndex: Note?
+    @State private var searchText = ""
     
     // exampleNote is not currently used
     //    var exampleNote: Note = Note(nr: 1, headerCode: "3", headerText: "Section 1", title: "New Updated Title", bodyText: "description")
@@ -24,65 +25,63 @@ struct ContentView: View {
     var body: some View {
         NavigationView {
             
-                List(selection: $selectedIndex) {
-                    ForEach($noteController.dummyArray) { $listItem in
-                        
-                        Button(action: {
-                            selectedIndex = listItem
-                            copyToClipboard(bodyText: listItem.bodyText)
-                            print("\(String(describing: selectedIndex!.bodyText))")
-                        }) {
-                            TableRowView(note: $listItem).frame(maxWidth: .infinity, alignment: .leading)
-                                .padding(5)
-                        }
-                        
-                        // I don't for the life of me understand why, but adding this custom buttonStyle allows me to change the width of the button using frame to fill the whole row
-                        .buttonStyle(BlueButtonStyle())
-                        // This adds an option to right click and delete, but not sure how to ensure this is the selected item
-                        .contextMenu {
-                            Button(action: deleteSelectedNote){
-                                Text("Delete")
-                            }
-                        }
-                        //                    NavigationLink(destination: DetailView(noteSection: $section).onAppear{
-                        //
-                        //                        selectedIndex = section
-                        //                        print("\(String(describing: selectedIndex!.bodyText))")
-                        //                        copyToClipboard(bodyText: section.bodyText)
-                        //
-                        //                    }) {
-                        //                        TableRowView(note: $section)
-                        //                    }
-                        //                    .frame(maxWidth: .infinity, alignment: .leading)
-                        //                    }
-                        //                    .contentShape(Rectangle())
-                        //                    .border(.green)
-                    }
-                    .onMove { indexSet, newOffset in
-                        print("onMove called")
-                        noteController.dummyArray.move(fromOffsets: indexSet, toOffset: newOffset)
-                        // renumber
-                        for i in 0..<noteController.dummyArray.count {
-                            noteController.dummyArray[i].nr = i+1
-                        }
-                        
+            List(selection: $selectedIndex) {
+                ForEach($noteController.dummyArray) { $listItem in
+                    Button(action: {
+                        selectedIndex = listItem
+                        copyToClipboard(bodyText: listItem.bodyText)
+                        print("\(String(describing: selectedIndex!.bodyText))")
+                    }) {
+                        TableRowView(note: $listItem).frame(maxWidth: .infinity, alignment: .leading)
+                            .padding(5)
                     }
                     
-                
-            }
-                .listStyle(SidebarListStyle())
-                .frame(minWidth: 250, maxWidth: 350)
-                .toolbar {
-                    ToolbarItemGroup{
-                        Spacer()
-                        Button(action: addNote) {
-                            Image(systemName: "plus")
-                                .resizable()
-                                    .frame(width: 24.0, height: 24.0)
+                    // I don't for the life of me understand why, but adding this custom buttonStyle allows me to change the width of the button using frame to fill the whole row
+                    .buttonStyle(BlueButtonStyle())
+                    // This adds an option to right click and delete, but not sure how to ensure this is the selected item
+                    .contextMenu {
+                        Button(action: deleteSelectedNote){
+                            Text("Delete")
                         }
                     }
+                    //                    NavigationLink(destination: DetailView(noteSection: $section).onAppear{
+                    //
+                    //                        selectedIndex = section
+                    //                        print("\(String(describing: selectedIndex!.bodyText))")
+                    //                        copyToClipboard(bodyText: section.bodyText)
+                    //
+                    //                    }) {
+                    //                        TableRowView(note: $section)
+                    //                    }
+                    //                    .frame(maxWidth: .infinity, alignment: .leading)
+                    //                    }
+                    //                    .contentShape(Rectangle())
+                    //                    .border(.green)
+                }
+                .onMove { indexSet, newOffset in
+                    print("onMove called")
+                    noteController.dummyArray.move(fromOffsets: indexSet, toOffset: newOffset)
+                    // renumber
+                    for i in 0..<noteController.dummyArray.count {
+                        noteController.dummyArray[i].nr = i+1
+                    }
+                    
                 }
                 
+                
+            }
+            .listStyle(SidebarListStyle())
+            .frame(minWidth: 250, maxWidth: 350)
+            .toolbar {
+                ToolbarItemGroup{
+                    Spacer()
+                    Button(action: addNote) {
+                        Image(systemName: "plus")
+                            .resizable()
+                            .frame(width: 24.0, height: 24.0)
+                    }
+                }
+            }
             if let selectedNote = selectedIndex {
                 DetailView(noteSection: Binding(get: {
                     selectedNote
@@ -97,15 +96,15 @@ struct ContentView: View {
                     .foregroundColor(.gray)
                     .padding()
             }
-            
-        }
-        .navigationTitle("Snippets")
-        .frame(maxWidth: 900, maxHeight: 600)
-        .onAppear {
-            //            self.readCodes()
         }
         
-    }
+                .navigationTitle("Snippets")
+                .frame(maxWidth: 900, maxHeight: 600)
+                .onAppear {
+                    //            self.readCodes()
+                }
+        }
+
     
     private func deleteNote(at offsets: IndexSet) {
         //        This function deletes notes from the notes array at the specified offsets and then checks if any of the deleted notes were the currently selected note. If the selected note was deleted, it sets selectedNote to nil.
