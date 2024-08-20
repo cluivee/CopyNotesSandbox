@@ -9,10 +9,13 @@ import SwiftUI
 
 @main
 struct CopyNotesSandboxApp: App {
+    let persistenceController = PersistenceController.shared
     
     var body: some Scene {
         WindowGroup {
-            ContentView(noteController: NoteModelController())
+            ContentView()
+                .environment(\.managedObjectContext, persistenceController.container.viewContext)
+
         }.commands {
             SidebarCommands()
             

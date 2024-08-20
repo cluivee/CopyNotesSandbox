@@ -17,19 +17,20 @@ extension NSTextView {
 }
 
 struct DetailView: View {
-    @Binding var noteSection: Note
-    @StateObject var noteController: NoteModelController
+    @Binding var note: Note
+//    @StateObject var noteController: NoteModelController
     var function: () -> Void
     
     
     var body: some View {
         VStack {
-            TextField("Title", text: $noteSection.title).labelsHidden()
+            TextField("Title", text: $note.title.toUnwrapped(defaultValue: "New title"))
+                .labelsHidden()
                 .font(.title.bold())
                 .border(.clear)
                 .textFieldStyle(PlainTextFieldStyle())
                 .padding([.top, .leading], 4)
-            TextEditorView(string: $noteSection.bodyText)
+            TextEditorView(string: $note.bodyText.toUnwrapped(defaultValue: "Description"))
                 .font(.title3)
                 
             Spacer()
@@ -41,7 +42,7 @@ struct DetailView: View {
             ToolbarItemGroup{
                 Button("Edit") {}
                 Button("Save") {}
-                Button("Copy") {copyToClipboard(bodyText: noteSection.bodyText)}
+                Button("Copy") {copyToClipboard(bodyText: note.bodyText ?? "")}
                 // Ok So apparently this was messing up the spacer in the sidebar
                 //                Spacer().frame(width: 50)
                 Button("Delete") {function()}
@@ -53,7 +54,7 @@ struct DetailView: View {
     private func copyToClipboard(bodyText: String) {
         // could probably remove the if statement here now
         
-        if noteSection.bodyText != nil {
+        if note.bodyText != nil {
             let pasteboard = NSPasteboard.general
             pasteboard.clearContents()
             pasteboard.setString(bodyText, forType: .string)
@@ -84,12 +85,11 @@ struct DetailView: View {
 
 struct DetailView_Previews: PreviewProvider {
     // some variable used just for the preview, has nothing to do with the actual data
-    @State static var previewNote: Note = Note(nr: 1, headerCode: "3", headerText: "Section 1", title: "Changed Title", bodyText: "description")
+//    @State static var previewNote: Note = Note(nr: 1, headerCode: "3", headerText: "Section 1", title: "Changed Title", bodyText: "description")
     
     static var previews: some View {
-        
         Group {
-            DetailView(noteSection: $previewNote, noteController: NoteModelController(), function: {})
+            DetailView(note: .constant(Note()), function: {})
         }
     }
 }
