@@ -1,6 +1,6 @@
 # Snippets Board
 
-This project has moved. Please see the new repository here[https://github.com/cluivee/CopyNotes]
+This project has moved. Please see the new repository [here](https://github.com/cluivee/CopyNotes)
 
 Snippets Board macOS app written with Swift and SwiftUI.
 
