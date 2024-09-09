@@ -1,5 +1,7 @@
 # Snippets Board
 
+This project has moved. Please see the new repository here[https://github.com/cluivee/CopyNotes]
+
 Snippets Board macOS app written with Swift and SwiftUI.
 
 Create a board of commonly used text snippets (code snippets, addresses, email addresses) that you can copy to the clipboard with one-click.
